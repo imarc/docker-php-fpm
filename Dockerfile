@@ -2,18 +2,19 @@ FROM php:7.0.5-fpm
 
 RUN apt-get update
 RUN apt-get install -y \
-    build-essential \
-    pkg-config \
-    git-core \
-    autoconf \
-    libjpeg62-turbo-dev \
-    libmcrypt-dev \
-    libpng12-dev \
+	build-essential \
+	pkg-config \
+	git-core \
+	autoconf \
+	libjpeg62-turbo-dev \
+	libmcrypt-dev \
+	libpng12-dev \
 	libcurl4-openssl-dev \
 	libpq-dev \
-    libmemcached-dev \
-    libmemcached11 \
-    libsqlite3-dev
+	libmemcached-dev \
+	libmemcached11 \
+	libsqlite3-dev \
+	vim
 
 RUN docker-php-ext-install iconv
 RUN docker-php-ext-install mcrypt
