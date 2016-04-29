@@ -1,6 +1,6 @@
-# PHP-FPM
+# PHP
 
-My personal PHP-FPM docker container
+My personal php fpm and cli docker container
 
 Currently focused on PHP 7.x
 
