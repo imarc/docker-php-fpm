@@ -46,4 +46,8 @@ RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD ./php-fpm.d/www.conf /usr/local/etc/php-fpm.d/www.conf
 
+# for osx
+RUN usermod -u 1000 www-data
+RUN usermod -G staff www-data
+
 WORKDIR /var/www/
