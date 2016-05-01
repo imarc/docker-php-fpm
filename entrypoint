@@ -1,6 +1,5 @@
 #!/bin/bash
-set -e pipefail
-IFS=$'\n\t'
+set -e
 
 bash /opt/configure
 
