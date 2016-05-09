@@ -14,7 +14,8 @@ RUN apt-get install -y \
 	libmemcached-dev \
 	libmemcached11 \
 	libsqlite3-dev \
-	vim
+	vim \
+	netcat
 
 RUN docker-php-ext-install iconv
 RUN docker-php-ext-install mcrypt
@@ -40,6 +41,7 @@ RUN rm -rf /tmp/php-memcached
 
 RUN echo 'extension=memcached.so' > /usr/local/etc/php/conf.d/docker-php-ext-memcached.ini
 
+
 # clean up
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
@@ -50,13 +52,11 @@ ADD ./php-fpm.d/www.conf /usr/local/etc/php-fpm.d/www.conf
 RUN usermod -u 1000 www-data
 RUN usermod -G staff www-data
 
-
 WORKDIR /var/www/
 
 COPY entrypoint /opt/entrypoint
-COPY configure /opt/configure
 RUN chmod 755 /opt/entrypoint
-RUN chmod 755 /opt/configure
 
 ENTRYPOINT ["/opt/entrypoint"]
 
+CMD ["php-fpm"]

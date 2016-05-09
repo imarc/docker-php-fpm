@@ -1,7 +1,10 @@
 #!/bin/bash
 set -e
 
-bash /opt/configure
+if [ -f "$BOOTSTRAP" ]
+then
+	bash "$BOOTSTRAP"
+fi
 
 exec "$@"
 
