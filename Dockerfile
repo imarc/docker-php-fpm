@@ -1,4 +1,4 @@
-FROM php:7.0.5-fpm
+FROM php:7.0.7-fpm
 
 RUN apt-get update
 RUN apt-get install -y \
@@ -14,8 +14,16 @@ RUN apt-get install -y \
 	libmemcached-dev \
 	libmemcached11 \
 	libsqlite3-dev \
+	libmagickwand-dev \
+	imagemagick \
+	subversion \
+	python \
+	g++ \
+	curl \
 	vim \
-	netcat
+	wget \
+	netcat \
+	chrpath
 
 RUN docker-php-ext-install iconv
 RUN docker-php-ext-install mcrypt
@@ -27,30 +35,26 @@ RUN docker-php-ext-install pdo_pgsql
 RUN docker-php-ext-install pdo_mysql
 RUN docker-php-ext-install pdo_sqlite
 
+COPY scripts/install-php-memcached.sh /install-php-memcached.sh
+RUN bash /install-php-memcached.sh && rm /install-php-memcached.sh
+
+COPY scripts/install-php-imagick.sh /install-php-imagick.sh
+RUN bash /install-php-imagick.sh && rm /install-php-imagick.sh
+
+COPY scripts/install-php-v8js.sh /install-php-v8js.sh
+RUN bash /install-php-v8js.sh && rm /install-php-v8js.sh
+
+# install composer
 WORKDIR /tmp
-
-# install memcached
-RUN git clone https://github.com/php-memcached-dev/php-memcached
-WORKDIR /tmp/php-memcached
-RUN git checkout -b php7 origin/php7
-RUN phpize
-RUN ./configure
-RUN make
-RUN make install
-RUN rm -rf /tmp/php-memcached
-
-RUN echo 'extension=memcached.so' > /usr/local/etc/php/conf.d/docker-php-ext-memcached.ini
-
+RUN wget https://getcomposer.org/composer.phar
+RUN mv composer.phar /bin/composer
+RUN chmod 700 /bin/composer
 
 # clean up
 RUN apt-get clean
 RUN rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 ADD ./php-fpm.d/www.conf /usr/local/etc/php-fpm.d/www.conf
-
-# for osx
-RUN usermod -u 1000 www-data
-RUN usermod -G staff www-data
 
 WORKDIR /var/www/
 
