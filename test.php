@@ -1,4 +1,6 @@
 <?php
+// test only half implemented
+
 $extensions = array_diff(
 	[
 		'Core',
