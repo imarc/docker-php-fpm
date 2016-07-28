@@ -1,7 +1,7 @@
 # PHP
 
-My personal php fpm and cli docker container.
-[View on Docker Hub.](https://hub.docker.com/r/jeffturcotte/php)
+Imarc's php fpm and cli docker container for local development
+[View on Docker Hub.](https://hub.docker.com/r/imarcagency/php)
 Built on top of the [official 7.x-fpm image.](https://hub.docker.com/_/php/)
 
 ## PHP Extensions
@@ -21,9 +21,8 @@ are denoted as such.
 - pdo_mysql
 - pdo_pgsql
 - pdo_sqlite
-- v8js (custom)
 
-# Utilities
+# Included System Utilities
 
 - curl
 - git
